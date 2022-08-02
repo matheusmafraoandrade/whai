@@ -13,7 +13,7 @@ st.title('Ranking de Associações')
 # Create a text element and let the reader know the data is loading.
 data_load_state = st.text('Loading data...')
 # Load 10,000 rows of data into the dataframe.
-basket = pd.read_csv(r"C:\Users\matma\OneDrive\Desktop\Groceries_dataset.csv")
+basket = pd.read_csv(r"Groceries_dataset.csv")
 # Notify the reader that the data was successfully loaded.
 data_load_state.text("Done!")
 
