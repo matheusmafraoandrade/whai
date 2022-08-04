@@ -38,7 +38,7 @@ transactions = transform_into_transactions(basket)
 
 ### Association Rules
 def mine_itemsets(df_transactions, df_basket):
-    min_support = st.sidebar.slider("Suporte mínimo", min_value=0, max_value=1, value=6/len(df_basket))
+    min_support = st.sidebar.slider("Suporte mínimo", min_value=0.0, max_value=1.0, value=6/len(df_basket))
     frequent_itemsets = fpgrowth(df_transactions, min_support=min_support, use_colnames=True, max_len = 2)
 
     metric = st.sidebar.selectbox("Métrica", ("support", "confidence", "lift"))
