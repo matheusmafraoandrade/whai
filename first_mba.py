@@ -56,3 +56,6 @@ for i in range(0,5):
     col3.metric("Suporte", f"{(itemsets['support'][i]*100).round(2)}%")
     col4.metric("Confiança", f"{(itemsets['confidence'][i]*100).round(2)}%")
     col5.metric("Lift", f"{(itemsets['lift'][i]).round(2)}")
+
+with st.sidebar:
+    st.header("Whai")
