@@ -17,8 +17,8 @@ basket = pd.read_csv(r"Groceries_dataset.csv")
 # Notify the reader that the data was successfully loaded.
 data_load_state.text("Done!")
 
-basket.replace({'brandy':'Pão Italiano', 'softener':'Vela', 'canned fruit':'Queijo',
-                'syrup':'Chocolate', 'artif. sweetener':'Morango', 'whole milk':'Vinho'}, inplace=True)
+#basket.replace({'brandy':'Pão Italiano', 'softener':'Vela', 'canned fruit':'Queijo',
+#                'syrup':'Chocolate', 'artif. sweetener':'Morango', 'whole milk':'Vinho'}, inplace=True)
 
 if st.checkbox('Show raw data'):
     st.subheader('Raw data')
