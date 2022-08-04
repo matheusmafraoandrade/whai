@@ -38,18 +38,18 @@ transactions = transform_into_transactions(basket)
 
 ### Association Rules
 def mine_itemsets(df_transactions, df_basket):
-    min_support = st.sidebar.slider("Suporte mínimo", min_value=0.0, max_value=1.0, value=6/len(basket))
-    frequent_itemsets = fpgrowth(df_transactions, min_support=min_support, use_colnames=True, max_len = 2)
+    #min_support = st.sidebar.slider("Suporte mínimo", min_value=0.0, max_value=1.0, value=6/len(basket))
+    frequent_itemsets = fpgrowth(df_transactions, min_support=6/len(df_basket), use_colnames=True, max_len = 2)
 
-    metric = st.sidebar.selectbox("Métrica", ("support", "confidence", "lift"))
-    if metric=="support":
-        min_threshold=0.5
-    elif metric=="confidence":
-        min_threshold=0.2
-    else:
-        min_threshold=1.5
+    # metric = st.sidebar.selectbox("Métrica", ("support", "confidence", "lift"))
+    # if metric=="support":
+    #     min_threshold=0.5
+    # elif metric=="confidence":
+    #     min_threshold=0.2
+    # else:
+    #     min_threshold=1.5
 
-    rules = association_rules(frequent_itemsets, metric=metric,  min_threshold=min_threshold).sort_values(
+    rules = association_rules(frequent_itemsets, metric="lift",  min_threshold=1.5).sort_values(
             'confidence', axis=0, ascending=False).reset_index()
 
     rules['antecedents'] = rules['antecedents'].astype('str').str.replace(r'[^(]*\({|\}\)[^)]*', '')
