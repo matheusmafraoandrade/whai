@@ -24,8 +24,7 @@ if st.checkbox('Show raw data'):
     st.subheader('Raw data')
     st.write(basket)
 
-with st.sidebar:
-    st.title("Whai")
+st.sidebar.title("Whai")
 
 ### Basket -> Transactions
 def transform_into_transactions(df):
@@ -52,7 +51,7 @@ def mine_itemsets(df_transactions, df_basket):
 
     rules = association_rules(frequent_itemsets, metric=metric,  min_threshold=min_threshold).sort_values(
             'confidence', axis=0, ascending=False).reset_index()
-            
+
     rules['antecedents'] = rules['antecedents'].astype('str').str.replace(r'[^(]*\({|\}\)[^)]*', '')
     rules['consequents'] = rules['consequents'].astype('str').str.replace(r'[^(]*\({|\}\)[^)]*', '')
     return rules
