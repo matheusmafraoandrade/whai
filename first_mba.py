@@ -15,7 +15,7 @@ data_load_state = st.text('Loading data...')
 # Load 10,000 rows of data into the dataframe.
 basket = pd.read_csv(r"Groceries_dataset.csv")
 # Notify the reader that the data was successfully loaded.
-data_load_state.text("Done!")
+data_load_state.text("")
 
 #basket.replace({'brandy':'Pão Italiano', 'softener':'Vela', 'canned fruit':'Queijo',
 #                'syrup':'Chocolate', 'artif. sweetener':'Morango', 'whole milk':'Vinho'}, inplace=True)
@@ -24,7 +24,10 @@ if st.checkbox('Show raw data'):
     st.subheader('Raw data')
     st.write(basket)
 
+with st.sidebar:
+    st.title("Whai")
 
+### Basket -> Transactions
 def transform_into_transactions(df):
     df.itemDescription = df.itemDescription.transform(lambda x: [x])
     df = df.groupby(['Member_number','Date']).sum()['itemDescription'].reset_index(drop=True)
@@ -32,14 +35,24 @@ def transform_into_transactions(df):
     transactions = pd.DataFrame(encoder.fit(df).transform(df), columns=encoder.columns_)
     return transactions
 
-#st.subheader('Transações')
 transactions = transform_into_transactions(basket)
-#st.table(transactions)
 
+### Association Rules
 def mine_itemsets(df_transactions, df_basket):
-    frequent_itemsets = fpgrowth(df_transactions, min_support= 6/len(df_basket), use_colnames=True, max_len = 2)
-    rules = association_rules(frequent_itemsets, metric="lift",  min_threshold = 1.5).sort_values(
+    min_support = st.sidebar.slider("Suporte mínimo", min_value=0, max_value=1, value=6/len(df_basket))
+    frequent_itemsets = fpgrowth(df_transactions, min_support=min_support, use_colnames=True, max_len = 2)
+
+    metric = st.sidebar.selectbox("Métrica", ("support", "confidence", "lift"))
+    if metric=="support":
+        min_threshold=0.5
+    elif metric=="confidence":
+        min_threshold=0.2
+    else:
+        min_threshold=1.5
+
+    rules = association_rules(frequent_itemsets, metric=metric,  min_threshold=min_threshold).sort_values(
             'confidence', axis=0, ascending=False).reset_index()
+            
     rules['antecedents'] = rules['antecedents'].astype('str').str.replace(r'[^(]*\({|\}\)[^)]*', '')
     rules['consequents'] = rules['consequents'].astype('str').str.replace(r'[^(]*\({|\}\)[^)]*', '')
     return rules
@@ -49,7 +62,7 @@ itemsets = mine_itemsets(transactions, basket)
 st.write(itemsets[['antecedents', 'consequents', 'support', 'confidence', 'lift']].head())
 
 st.subheader('Top 5 Associações')
-col1, col2, col3, col4, col5 = st.columns(5, gap='large')
+col1, col2, col3, col4, col5 = st.columns(5)
 for i in range(0,5):
     col1.metric("Antecedente", f"{itemsets['antecedents'][i]}")
     col2.metric("Consequente", f"{itemsets['consequents'][i]}")
