@@ -49,7 +49,7 @@ itemsets = mine_itemsets(transactions, basket)
 st.write(itemsets[['antecedents', 'consequents', 'support', 'confidence', 'lift']].head())
 
 st.subheader('Top 5 Associações')
-col1, col2, col3, col4, col5 = st.columns(5)
+col1, col2, col3, col4, col5 = st.columns(5, gap='large')
 for i in range(0,5):
     col1.metric("Antecedente", f"{itemsets['antecedents'][i]}")
     col2.metric("Consequente", f"{itemsets['consequents'][i]}")
