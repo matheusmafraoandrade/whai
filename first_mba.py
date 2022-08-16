@@ -58,7 +58,7 @@ def mine_itemsets(df_transactions, df_basket):
 
 st.subheader('Pares de itens')
 itemsets = mine_itemsets(transactions, basket)
-st.write(itemsets[['antecedents', 'consequents', 'support', 'confidence', 'lift']].head())
+st.write(itemsets[['antecedents', 'consequents', 'support', 'confidence', 'lift']])
 
 st.subheader('Top 5 Associações')
 col1, col2, col3, col4, col5 = st.columns(5)
