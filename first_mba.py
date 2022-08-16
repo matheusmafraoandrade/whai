@@ -24,7 +24,7 @@ if st.checkbox('Show raw data'):
     st.subheader('Raw data')
     st.write(basket)
 
-st.sidebar.title("Whai")
+#st.sidebar.title("Whai")
 
 ### Basket -> Transactions
 def transform_into_transactions(df):
