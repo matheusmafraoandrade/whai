@@ -17,8 +17,8 @@ basket = pd.read_csv(r"Groceries_dataset.csv")
 # Notify the reader that the data was successfully loaded.
 data_load_state.text("")
 
-#basket.replace({'brandy':'Pão Italiano', 'softener':'Vela', 'canned fruit':'Queijo',
-#                'syrup':'Chocolate', 'artif. sweetener':'Morango', 'whole milk':'Vinho'}, inplace=True)
+basket.replace({'brandy':'Pão Italiano', 'softener':'Vela', 'canned fruit':'Queijo',
+                'syrup':'Chocolate', 'artif. sweetener':'Morango', 'whole milk':'Vinho'}, inplace=True)
 
 if st.checkbox('Show raw data'):
     st.subheader('Raw data')
@@ -69,5 +69,5 @@ for i in range(0,5):
     col4.metric("Confiança", f"{(itemsets['confidence'][i]*100).round(2)}%")
     col5.metric("Lift", f"{(itemsets['lift'][i]).round(2)}")
 
-with st.sidebar:
-    st.header("Whai")
+#with st.sidebar:
+#    st.header("Whai")
